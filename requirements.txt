@@ -2,4 +2,3 @@ gunicorn
 Flask
 schedule
 plaid-python
-MySQL-python
