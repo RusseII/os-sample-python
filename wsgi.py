@@ -220,5 +220,13 @@ def other():
 
 
 
+@application.route("/hello")
+def hello1():
+    return "Hello d!"
+    
+@application.route("/hello1")
+def hell2o1():
+    return "Hellodssd d!"
+    
 if __name__ == "__main__":
     application.run()
