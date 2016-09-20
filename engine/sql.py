@@ -454,4 +454,7 @@ class SQLConnection:
      
 
 
-SQLConnection().get_advanced_friend_data("rwr21")
+try: 
+    SQLConnection().get_advanced_friend_data("rwr21")
+except:
+    print "wtf"
