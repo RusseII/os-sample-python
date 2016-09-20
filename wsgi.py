@@ -59,7 +59,7 @@ t2.start()
 
 
 
-app.config.from_pyfile('flaskapp.cfg')
+application.config.from_pyfile('flaskapp.cfg')
 
 @application.route('/')
 def index():
