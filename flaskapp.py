@@ -1,6 +1,3 @@
-from flask import Flask
-application = Flask(__name__)
-
 import os
 import MySQLdb
 from datetime import datetime
@@ -57,17 +54,16 @@ t2.start()
 
 
 
-
-
+app = Flask(__name__)
 app.config.from_pyfile('flaskapp.cfg')
 
-@application.route('/')
+@app.route('/')
 def index():
     return render_template('index.html')
 
 
 
-@application.route('/setup/create_user',methods=["POST"])
+@app.route('/setup/create_user',methods=["POST"])
 def create_user():
 	try:
 		db=SQLConnection()
@@ -84,7 +80,7 @@ def create_user():
 	except:
 		return "create_user_error"
 
-@application.route('/setup/login',methods=["POST"])
+@app.route('/setup/login',methods=["POST"])
 def setup_login():
 	db=SQLConnection()
 	data=request.get_json(force=True)
@@ -92,7 +88,7 @@ def setup_login():
 	password=data["pass_word"]
 	return db.login(username,password)
 
-@application.route("/setup/add_plaid",methods=["POST"]) #must make sure this works with access_id
+@app.route("/setup/add_plaid",methods=["POST"]) #must make sure this works with access_id
 def add_plaid(username):
 
 	#db=SQLConnection()
@@ -103,7 +99,7 @@ def add_plaid(username):
 	return username
 
 
-@application.route("/friends/add", methods=["POST"])
+@app.route("/friends/add", methods=["POST"])
 def add_friend():
 	try:
 		data=request.get_json(force=True)
@@ -114,7 +110,7 @@ def add_friend():
 	except:
 		print "error add_friend"
 
-@application.route("/friends/find",methods=["POST"])
+@app.route("/friends/find",methods=["POST"])
 def get_friends():
 	try:
 		temp={}
@@ -126,7 +122,7 @@ def get_friends():
 	except:
 		return "error get_friends"
 
-@application.route("/friends/find_advanced",methods=["POST"])
+@app.route("/friends/find_advanced",methods=["POST"])
 def get_friends_advanced():
 	try:
 		db=SQLConnection()
@@ -142,7 +138,7 @@ def get_friends_advanced():
 
 
 
-@application.route("/events/plaid",methods=["POST"])
+@app.route("/events/plaid",methods=["POST"])
 def events_plaid():
 	try:
 		p=plaid()	
@@ -152,7 +148,7 @@ def events_plaid():
 	except:
 		print "error events_plaid"
 
-@application.route("/events/get_new",methods =["POST"])
+@app.route("/events/get_new",methods =["POST"])
 def get_new_events():
 	try:
 		db=SQLConnection()
@@ -168,7 +164,7 @@ def get_new_events():
 	except:
 		return "error get_new_events"
 
-@application.route("/events/get_last_few",methods =["POST"])
+@app.route("/events/get_last_few",methods =["POST"])
 def get_last_few():
 	try:
 		db=SQLConnection()
@@ -183,16 +179,16 @@ def get_last_few():
 
 
 
-@application.route('/<path:resource>')
+@app.route('/<path:resource>')
 def serveStaticResource(resource):
     return send_from_directory('static/', resource)
 
-@application.route("/api/test",methods =["POST","GET"])
+@app.route("/api/test",methods =["POST","GET"])
 def test():
 	json_test= { "user_name": "e" }  
 	return json.dumps(json_test)
 
-@application.route("/api/post")
+@app.route("/api/post")
 def other():
     return "<strong>ROFL</strong>"
 
@@ -210,15 +206,5 @@ def other():
 
 
 
-
-
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    application.run()
+if __name__ == '__main__':
+    app.run(debug=False)
