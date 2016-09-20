@@ -456,4 +456,4 @@ class SQLConnection:
      
 
 
-#SQLConnection().get_advanced_friend_data("rwr21")
+SQLConnection().get_advanced_friend_data("rwr21")
